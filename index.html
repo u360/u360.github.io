@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <title>Encrypt</title>
+    <style>
+      * {
+        margin: 0;
+        border: none;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 5vmin;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      html {
+        height: 100vh;
+        overflow: hidden;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background-color: white;
+      }
+      #actual-title {
+        position: fixed;
+        background-color: #CCCCCC;
+        color: black;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      #actual-message {
+        position: fixed;
+        padding: 1vmin;
+        overflow-y: scroll;
+        color: black;
+      }
+      #display-title {
+        position: fixed;
+        background-color: #CCCCCC;
+        color: black;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+      }
+      #display-message {
+        position: fixed;
+        padding: 1vmin;
+        overflow-y: scroll;
+        color: black;
+      }
+      #encode-button {
+        position: fixed;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        background-color: #04AA6D;
+        color: white;
+        border-style: solid;
+        border-width: 0 10vw 0 10vw;
+        border-color: #CCCCCC;
+      }
+      #encoded-title {
+        position: fixed;
+        background-color: #CCCCCC;
+        color: black;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        display: none;
+      }
+      #encoded-message {
+        position: fixed;
+        padding: 1vmin;
+        overflow-y: scroll;
+        color: black;
+        display: none;
+      }
+      #decode-button {
+        position: fixed;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: bold;
+        background-color: #04AA6D;
+        color: white;
+        border-style: solid;
+        border-width: 0 10vw 0 10vw;
+        border-color: #CCCCCC;
+        display: none;
+      }
+      @media only screen and (orientation: portrait) {
+        #actual-title {
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 4vh;
+          line-height: 4vh;
+        }
+        #actual-message {
+          top: 4vh;
+          left: 0;
+          width: 100vw;
+          height: 29vh;
+        }
+        #display-title {
+          top: 33vh;
+          left: 0;
+          width: 100vw;
+          height: 4vh;
+          line-height: 4vh;
+        }
+        #display-message {
+          top: 37vh;
+          left: 0;
+          width: 100vw;
+          height: 59vh;
+        }
+        #encode-button {
+          top: 96vh;
+          left: 0;
+          width: 100vw;
+          height: 4vh;
+          line-height: 4vh;
+          border-width: 0 10vw 0 10vw;
+        }
+
+        #encoded-title {
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 4vh;
+          line-height: 4vh;
+        }
+        #encoded-message {
+          top: 4vh;
+          left: 0;
+          width: 100vw;
+          height: 92vh;
+        }
+        #decode-button {
+          top: 96vh;
+          left: 0;
+          width: 100vw;
+          height: 4vh;
+          line-height: 4vh;
+          border-width: 0 10vw 0 10vw;
+        }
+      }
+      @media only screen and (orientation: landscape) {
+        #actual-title {
+          top: 0;
+          left: 0;
+          width: 40vw;
+          height: 6vh;
+          line-height: 6vh;
+        }
+        #actual-message {
+          top: 6vh;
+          left: 0;
+          width: 40vw;
+          height: 88vh;
+        }
+        #display-title {
+          top: 0;
+          left: 40vw;
+          width: 60vw;
+          height: 6vh;
+          line-height: 6vh;
+        }
+        #display-message {
+          top: 6vh;
+          left: 40vw;
+          width: 60vw;
+          height: 88vh;
+        }
+        #encode-button {
+          top: 94vh;
+          left: 0;
+          width: 100vw;
+          height: 6vh;
+          line-height: 6vh;
+          border-width: 0 10vw 0 10vw;
+        }
+        #encoded-title {
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 6vh;
+          line-height: 6vh;
+        }
+        #encoded-message {
+          top: 6vh;
+          left: 0;
+          width: 100vw;
+          height: 88vh;
+        }
+        #decode-button {
+          top: 94vh;
+          left: 0;
+          width: 100vw;
+          height: 6vh;
+          line-height: 6vh;
+          border-width: 0 10vw 0 10vw;
+        }
+      }
+    </style>
+    <script>
+      function encodeFunction() {
+        document.getElementById("actual-title").style.display = "none";
+        document.getElementById("actual-message").style.display = "none";
+        document.getElementById("display-title").style.display = "none";
+        document.getElementById("display-message").style.display = "none";
+        document.getElementById("encode-button").style.display = "none";
+        document.getElementById("encoded-title").style.display = "block";
+        document.getElementById("encoded-message").style.display = "block";
+        document.getElementById("decode-button").style.display = "block";
+      }
+      function decodeFunction() {
+        document.getElementById("encoded-title").style.display = "none";
+        document.getElementById("encoded-message").style.display = "none";
+        document.getElementById("decode-button").style.display = "none";
+        document.getElementById("actual-title").style.display = "block";
+        document.getElementById("actual-message").style.display = "block";
+        document.getElementById("display-title").style.display = "block";
+        document.getElementById("display-message").style.display = "block";
+        document.getElementById("encode-button").style.display = "block";
+      }
+    </script>
+
+
+<script>
+
+function isCharacterUpper(char) {
+  return (/[A-Z]/).test(char)
+}
+function isCharacterLower(char) {
+  return (/[a-z]/).test(char)
+}
+
+var encoded = document.getElementById('encoded-message');var decoded = document.getElementById('actual-message');
+function encode_text() {
+  var text = document.getElementById("actual-message").value;
+  var copy = document.getElementById("display-message").value;
+  var binary = [];
+  text += String.fromCharCode(0);
+  for (var n = 0, l = text.length; n < l; n ++) {
+    var c = text.charCodeAt(n);
+    binary.push(c & 64);
+    binary.push(c & 32);
+    binary.push(c & 16);
+    binary.push(c & 8);
+    binary.push(c & 4);
+    binary.push(c & 2);
+    binary.push(c & 1);
+  }
+  var encoded_string = '';
+  var x = 0;
+  for (var n = 0, l = copy.length; n < l; n ++) {
+    var c = copy.charAt(n);
+    if (isCharacterUpper(c) || isCharacterLower(c)) {
+      if (x < binary.length) {
+        if (binary[x] == 0) {
+          c = c.toLowerCase();
+        } else {
+          c = c.toUpperCase();
+        }
+        x = x + 1;
+      }
+    }
+    encoded_string += c;
+  }
+  document.getElementById("encoded-message").value = encoded_string;
+}
+
+function decode_text() {
+  var text = document.getElementById("encoded-message").value;
+  var binary = 0;
+  var value = 64;
+  decoded_string = '';
+  for (var n = 0, l = text.length; n < l; n ++) {
+    var c = text.charAt(n);
+    if (isCharacterUpper(c) || isCharacterLower(c)) {
+      if (isCharacterUpper(c)) {
+        binary += value;
+      }
+      if (value == 1) {
+        if (binary == 0) {
+          break;
+        }
+        decoded_string += String.fromCharCode(binary);
+        binary = 0;
+        value = 128;
+      }
+      value /= 2;
+    }
+  }
+  document.getElementById("actual-message").value = decoded_string;
+  document.getElementById("display-message").value = text;
+}
+</script>
+
+  </head>
+  <body>
+    <div id="actual-title">ACTUAL MESSAGE</div>
+    <textarea id="actual-message"></textarea>
+    <div id="display-title">DISPLAY MESSAGE</div>
+    <textarea id="display-message"></textarea>
+    <button id="encode-button" onclick="encode_text();encodeFunction()">Encode Message</button>
+    <div id="encoded-title">ENCODED MESSAGE</div>
+    <textarea id="encoded-message"></textarea>
+    <button id="decode-button" onclick="decode_text();decodeFunction()">Decode Message</button>
+  </body>
+</html>
